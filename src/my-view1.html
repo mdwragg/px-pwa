@@ -9,29 +9,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/px-card/px-card.html">
 
 <dom-module id="my-view1">
   <template>
-    <style include="shared-styles">
+    <style>
       :host {
         display: block;
 
         padding: 10px;
       }
     </style>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-    </div>
+    <px-card chevron="true" header-text="Card" icon="fa-fort-awesome"><h4>Hello World</h4><p>This is the bare minimum you need for a Predix Experience card.</p></px-card>
   </template>
 
   <script>
     Polymer({
-      is: 'my-view1',
+      is: 'my-view1'
     });
   </script>
 </dom-module>

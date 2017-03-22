@@ -7,4 +7,16 @@
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
-console.info('Service worker disabled for development, will be generated at build time.');
+
+'use strict';
+
+const del = require('del');
+
+// Returns a Promise to delete a directory
+function clean() {
+  return del(global.config.build.rootDirectory);
+}
+
+module.exports = {
+  build: clean
+};
