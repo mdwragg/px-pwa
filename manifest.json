@@ -1,20 +1,40 @@
 {
-  "name": "My App",
-  "short_name": "My App",
+  "name": "Predix UI PWA Starter Seed",
+  "short_name": "Predix UI PWA",
   "start_url": "/?homescreen=1",
   "display": "standalone",
-  "theme_color": "#3f51b5",
-  "background_color": "#3f51b5",
+  "background_color": "#2D2D30",
+  "theme_color": "#2D2D30",
   "icons": [
     {
-      "src": "images/manifest/icon-192x192.png",
+      "src": "img/Predix-UI-Favicon_128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Predix-UI-Favicon_16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Predix-UI-Favicon_192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "images/manifest/icon-512x512.png",
-      "sizes": "512x512",
+      "src": "img/Predix-UI-Favicon_24x24.png",
+      "sizes": "24x24",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Predix-UI-Favicon_32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Predix-UI-Favicon_64x64.png",
+      "sizes": "64x64",
       "type": "image/png"
     }
-  ]
+  ],
 }
