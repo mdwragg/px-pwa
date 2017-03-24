@@ -1,26 +1,18 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/px-card/px-card.html">
+<link rel="import" href="../bower_components/px-map/px-map.html">
+<link rel="import" href="../bower_components/px-map/px-map-tile-layer.html">
 
 <dom-module id="my-view1">
   <template>
-    <style>
-      :host {
-        display: block;
-
-        padding: 10px;
-      }
-    </style>
-    <px-card chevron="true" header-text="Card" icon="fa-fort-awesome"><h4>Hello World</h4><p>This is the bare minimum you need for a Predix Experience card.</p></px-card>
+    <px-card chevron="true" header-text="Card" icon="fa-fort-awesome">
+      <div style="height:100vh;width:100%;display:flex">
+        <px-map zoom="10" lat="37.7749" lng="-122.4312" flex-to-size="true">
+          <!-- <px-map-tile-layer url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'></px-map-tile-layer> -->
+          <px-map-tile-layer url='http://{s}.osm.maptiles.xyz/{z}/{x}/{y}.png'></px-map-tile-layer>
+        </px-map>
+      </div>
+    </px-card>
   </template>
 
   <script>
@@ -29,3 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   </script>
 </dom-module>
+
+
+
+<!-- <px-map zoom="10" lat="0.0" lng="42.0" flex-to-size>
+  <px-map-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></px-map-tile-layer>
+</px-map> -->
