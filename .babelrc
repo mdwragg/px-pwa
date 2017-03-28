@@ -1,0 +1,6 @@
+{
+  "presets" : ["latest"],
+  "minified" : false,
+  "comments" : false,
+  "plugins": ["transform-runtime"]
+}
