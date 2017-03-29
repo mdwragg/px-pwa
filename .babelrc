@@ -1,6 +1,6 @@
 {
-  "presets" : ["latest"],
-  "minified" : false,
-  "comments" : false,
+  "presets" : ["es2015"],
+  "minified" : true,
+  "comments" : true,
   "plugins": ["transform-runtime"]
 }
