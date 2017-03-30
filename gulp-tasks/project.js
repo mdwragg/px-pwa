@@ -20,6 +20,9 @@ const project = new polymer.PolymerProject(polymerJSON);
 const bundledPath = path.join(global.config.build.rootDirectory, global.config.build.bundledDirectory);
 const unbundledPath = path.join(global.config.build.rootDirectory, global.config.build.unbundledDirectory);
 
+const browserify = require('gulp-browserify');
+
+
 // This is the heart of polymer-build, and exposes much of the
 // work that Polymer CLI usually does for you
 // There are tasks to split the source files and dependency files into
@@ -75,6 +78,9 @@ function merge(source, dependencies) {
 function writeBundledOutput(stream) {
   return new Promise(resolve => {
     stream.pipe(project.bundler)
+      // .pipe(browserify({
+      //   insertGlobals : true
+      // }))
       .pipe(gulp.dest(bundledPath))
       .on('end', resolve);
   });
