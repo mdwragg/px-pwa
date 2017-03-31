@@ -1,0 +1,65 @@
+// Settings
+@import "px-colors-design/_settings.colors.scss";
+//
+// Generic
+@impor"px-normalize-design/_generic.normalize.scss";
+@import "px-box-sizing-design/_generic.box-sizing.scss";
+@import "px-helpers-design/_generic.helpers.scss";
+
+// Base
+@import "px-viewport-design/_base.viewport.scss";
+@import "px-flexbox-design/_base.flexbox.scss";
+@import "px-headings-design/_base.headings.scss";
+
+// Meta
+
+// Objects
+
+[role=banner], [role=contentinfo] {
+  height: calculateRem(60px);
+  background: var(--px-seed-header-background-color);
+}
+
+[role=banner] {
+  width: 100%;
+  display: block;
+  margin: auto;
+  h3 {
+    @include inuit-font-size(20px);
+    margin: 0;
+    line-height: calculateRem(60px);
+    font-weight: normal;
+    color: var(--px-seed-header-text-color, $gray4);
+    display:inline-block;
+    svg {
+      margin-bottom: -.1em;
+    }
+
+  }
+
+  h3.app-title {
+    color: var(--px-seed-header-text-color, $gray4);
+  }
+
+  h3.logo {
+    color: var(--px-seed-header-text-color, $gray6);
+  }
+
+}
+
+// Trumps
+$inuit-enable-margins--tiny             : true;
+$inuit-enable-margins--small            : true;
+$inuit-enable-margins--large            : true;
+$inuit-enable-margins--huge             : true;
+$inuit-enable-margins--none             : true;
+$inuit-enable-margins--negative-tiny    : true;
+$inuit-enable-paddings                  : true;
+$inuit-enable-paddings--tiny            : true;
+$inuit-enable-paddings--small           : true;
+$inuit-enable-paddings--large           : true;
+$inuit-enable-paddings--huge            : true;
+$inuit-enable-paddings--none            : true;
+
+@import "px-spacing-design/_trumps.spacing.scss";
+@import "px-widths-design/_trumps.widths.scss";

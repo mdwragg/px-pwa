@@ -13,6 +13,20 @@
 const path = require('path');
 const gulp = require('gulp');
 const gulpif = require('gulp-if');
+const combiner = require('stream-combiner2');
+const stylemod = require('gulp-style-modules');
+const $ = require('gulp-load-plugins')();
+const importOnce = require('node-sass-import-once');
+const argv = require('yargs').argv;
+
+const sassOptions = {
+  importer: importOnce,
+  importOnce: {
+    index: true,
+    bower: true
+  }
+};
+
 
 // Got problems? Try logging 'em
 // const logging = require('plylog');
@@ -90,11 +104,51 @@ function dependencies() {
     .pipe(project.rejoin());
 }
 
+// gulp.task('clean', function() {
+//   return gulp.src(['src/css'], {
+//     read: false
+//   }).pipe($.clean());
+// });
+
+function handleError(err){
+  console.log(err.toString());
+  this.emit('end');
+}
+
+function buildCSS(){
+  return combiner.obj([
+    $.sass(sassOptions),
+    $.autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false,
+      flexbox: false
+    }),
+    gulpif(!argv.debug, $.cssmin())
+  ]).on('error', handleError);
+}
+
+gulp.task('sass', function() {
+  return gulp.src(['src/sass/*.scss'])
+    .pipe(buildCSS())
+    .pipe(stylemod({
+      moduleId: function(file) {
+        return path.basename(file.path, path.extname(file.path)) + '-styles';
+      }
+    }))
+    .pipe(gulp.dest('src/css'));
+});
+
+gulp.task('watch', function() {
+  gulp.watch(['src/sass/*.scss'], gulp.series('sass'));
+});
+
 // Clean the build directory, split all source and dependency files into streams
 // and process them, and output bundled and unbundled versions of the project
 // with their own service workers
 gulp.task('default', gulp.series([
   clean.build,
+//  'clean',
+  'sass',
   project.merge(source, dependencies),
   project.serviceWorker
 ]));
