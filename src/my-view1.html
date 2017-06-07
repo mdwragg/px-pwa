@@ -5,13 +5,26 @@
 
 <dom-module id="my-view1">
   <template>
+    <style>
+      :host {
+        display: flex;
+        flex: 1 1 auto;
+      }
+      px-card {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+      }
+      px-map {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
     <px-card chevron="true" header-text="Card" icon="fa-fort-awesome">
-      <div style="height:100vh;width:100%;display:flex">
-        <px-map zoom="10" lat="37.7749" lng="-122.4312" flex-to-size="true">
-          <px-map-tile-layer url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'></px-map-tile-layer>
-          <!-- <px-map-tile-layer url='http://{s}.osm.maptiles.xyz/{z}/{x}/{y}.png'></px-map-tile-layer> -->
-        </px-map>
-      </div>
+      <px-map zoom="10" lat="37.7749" lng="-122.4312">
+        <px-map-tile-layer url='https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'></px-map-tile-layer>
+        <!-- <px-map-tile-layer url='http://{s}.osm.maptiles.xyz/{z}/{x}/{y}.png'></px-map-tile-layer> -->
+      </px-map>
     </px-card>
   </template>
 

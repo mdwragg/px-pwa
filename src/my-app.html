@@ -14,15 +14,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/px-dark-theme/px-dark-theme-styles.html">
-<style include="px-dark-theme-styles" is="custom-style"></style>
+<link rel="import" href="../bower_components/px-theme/px-theme-styles.html">
+<style include="px-theme-styles" is="custom-style"></style>
 <link rel="import" href="../bower_components/px-app-nav/px-app-nav.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="px-app-header.html">
 
 <dom-module id="my-app">
   <template>
+    <style>
+      :host {
+        margin: 0;
+        padding: 0;
+        --px-app-nav-background-color: #E2E8ED;
+      }
+      .app-main {
+        width: 100%;
+        height: calc(100vh - 60px);
+        display: flex;
+      }
+      iron-pages {
+        display: flex;
+        flex: 1 1 auto;
+        margin: 10px 30px;
+      }
+    </style>
     <app-location use-hash-as-path route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -32,33 +48,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
 
 
-    <app-drawer-layout>
-      <app-header>
-        <px-app-header></px-app-header>
-      </app-header>
-      <app-drawer>
+    <app-header-layout>
+      <app-header fixed>
         <px-app-nav
-          class="navbar"
-          nav-items="[[navItems]]"
-          path-prefix="[[pathPrefix]]">
+            items="{{navItems}}"
+            selected-item="{{selectedNavItem}}"
+            selected-route="{{navRoute}}">
         </px-app-nav>
-      </app-drawer>
-
-      <iron-pages
-      selected="[[page]]"
-      attr-for-selected="name"
-      fallback-selection="view404"
-      role="main">
-        <my-view1 name="view1"></my-view1>
-        <my-view2 name="view2"></my-view2>
-        <my-view3 name="view3"></my-view3>
-        <my-view404 name="view404"></my-view404>
-      </iron-pages>
-
-    </app-drawer-layout>
-
-
-
+      </app-header>
+      <div class="app-main">
+        <iron-pages
+            selected="[[selectedNavItem.id]]"
+            attr-for-selected="name"
+            fallback-selection="view404"
+            role="main">
+          <my-view1 name="view1"></my-view1>
+          <my-view2 name="view2"></my-view2>
+          <my-view3 name="view3"></my-view3>
+          <my-view404 name="view404"></my-view404>
+        </iron-pages>
+      </div>
+    </app-header-layout>
   </template>
 
   <script>
@@ -71,36 +81,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged',
         },
-        pathPrefix: {
-          type: String,
-          value: '#'
-        },
         navItems: {
           type: Array,
           value: function() {
             return [{
               "label": "View1",
-              "path": "/view1",
-              "icon": "fa-tachometer"
+              "id": "view1",
+              "icon": "px:view"
             }, {
               "label": "View2",
-              "path": "/view2",
-              "icon": "fa-file"
+              "id": "view2",
+              "icon": "px:image"
             }
           ]}
+        },
+        selectedNavItem: {
+          type: Object
+        },
+        navRoute: {
+          type: Object
+        },
+        routeData: {
+          type: Object
         }
       },
 
       observers: [
         '_routePageChanged(routeData.page)',
+        '_navPageChanged(selectedNavItem.id)'
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        var newPage = page || 'view1';
+        // Trigger page load/change
+        this.page = newPage;
+        // Sync app route --> nav route
+        this.navRoute = [newPage]
+      },
 
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
+      _navPageChanged: function(page) {
+        var newPage = page || 'view1';
+        // Trigger page load/change
+        this.page = newPage;
+        // We need to ensure app-route has an initial path or this change
+        // won't notify and update the URL. This is a naive implementation
+        // in place of a more robust app-route wrapper.
+        if (this.route.path === "") {
+          this.set('route.path', '/' + newPage);
         }
+        // Sync nav route --> app route
+        this.set('routeData.page', newPage);
       },
 
       _pageChanged: function(page) {
